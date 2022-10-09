@@ -118,11 +118,11 @@ output 1: An array of strings that's been filtered
 3. If the element contains the string, I'll return it's value. Using .filter() should automatically remove the elements that don't meet this criteria.
 
 --- AFTER TESTING
-4. After running some tests, I realized I need to add another step to this to account for case sensitivity with the input string. So, I'll use an OR operator and .toUpperCase() on the input string to account for this.
+4. After running some tests, I realized I need to add another step to this to account for case sensitivity with the input string. So, I'll use an OR operator and .toLowerCase() on both the input array element and the input string to account for this.
 */
 
 const findLetterInElement = (arr, str) => {
-  return arr.filter((v) => v.includes(str) || v.includes(str.toUpperCase()));
+  return arr.filter((v) => v.toLowerCase().includes(str.toLowerCase()));
 };
 
 // --------------------3) Create a function that takes in an array of 5 numbers and determines whether or not the array is a "full house". A full house is exactly one pair and one three of a kind.
@@ -141,11 +141,16 @@ describe("checkFullHouse", () => {
     // Expected output: true
     const hand5 = [5, 5, 5, 3, 3, 6];
     // Expected output: "A full house cannot be more than 5 cards."
+    const hand6 = [5, 5, 5, 3];
+    // Expected output: "A full house cannot be more than 5 cards."
     expect(checkFullHouse(hand1)).toEqual(true);
     expect(checkFullHouse(hand2)).toEqual(false);
     expect(checkFullHouse(hand3)).toEqual(false);
     expect(checkFullHouse(hand4)).toEqual(true);
     expect(checkFullHouse(hand5)).toEqual(
+      "A full house cannot be more than 5 cards."
+    );
+    expect(checkFullHouse(hand6)).toEqual(
       "A full house cannot be more than 5 cards."
     );
   });
@@ -173,8 +178,8 @@ const checkFullHouse = (arr) => {
   // I'm creating an ampty array because I want to store the result of our Object.values somewhere that I can access the last element's index.
   let arr1 = [];
 
-  if (arr.length > 5) {
-    // A full house will always be a set of 2 and 3 matching numbers. Therefore, If an array has a length longer than 5, it's not a full house.
+  if (arr.length !== 5) {
+    // A full house will always be a set of 2 and 3 matching numbers. Therefore, If an array has a length that IS NOT 5, it's not a full house.
     return "A full house cannot be more than 5 cards.";
   } else {
     // I'm using for.Each to iterate instead of a for loop.
@@ -194,7 +199,7 @@ const checkFullHouse = (arr) => {
 //   const obj = {};
 //   let arr1 = [];
 
-//   if (arr.length > 5) {
+//   if (arr.length !== 5) {
 //     return "A full house cannot be more than 5 cards.";
 //   } else {
 //     arr.forEach((v) => {
